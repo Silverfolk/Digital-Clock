@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <title>Todo List</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Todo List</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">About</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled">Contact</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    <!-- <h1>Hello, world!</h1> -->
+    <div class="container my-4">
+        <h2 class="text-center ">Todo's List</h2>
+        <!-- text center is a class of bootstrap -->
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+    -->
+    
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" id="title" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">Add an item to the list </small>
+        </div>
+        <div class="form-group">
+            <label for="description">Example textarea</label>
+            <textarea class="form-control" id="description" rows="3"></textarea>
+          </div>
+        
+        <button  type="submit" class="btn btn-primary" id="add" style="margin: 3px;">Add to List</button>
+        <button class="btn btn-primary"onclick="clearStr()">Clear List</button>
+      
+
+      <div id="items" class="my-4">
+        <h2>Your items</h2>  
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">SNo</th>
+                <th scope="col">Item Title</th>
+                <th scope="col">Item Description</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody id="tablebody">
+              <tr>
+                <th scope="row">1</th>
+                <td>Bhaiya Thodi chai pe lo</td>
+                <td>Aare bhaiya coder ho toh kya chai nhi piyoge</td>
+                <td><button class="btn btn-sm btn-primary" ">Delete</button></td>
+              </tr>
+              
+            </tbody>
+          </table>
+      </div>
+    <script>
+      function getAndupdate(){
+       //  yaha basically hum ek tarike ka hashMap bana rhe hai
+       console.log("Updating Lists...");
+       tit=document.getElementById('title').value;
+       desc=document.getElementById('description').value;
+       if(localStorage.getItem('itemsJson')==null){
+         itemsJsonArray=[];
+         itemsJsonArray.push([tit,desc]);
+         localStorage.setItem('itemsJson',JSON.stringify(itemsJsonArray));
+       }
+       else{
+         itemsJsonArrayStr=localStorage.getItem('itemsJson');
+        //  abb string ko parse bhi karna hoga as jo bhi element aayega vo as a string hi aayega
+        itemsJsonArray=JSON.parse(itemsJsonArrayStr);
+        itemsJsonArray.push([tit,desc]);
+         localStorage.setItem('itemsJson',JSON.stringify(itemsJsonArray));
+       }
+       update();
+      }
+      function update(){
+        if(localStorage.getItem('itemsJson')==null){
+         itemsJsonArray=[];
+        //  push nhi karenge yaha
+         localStorage.setItem('itemsJson',JSON.stringify(itemsJsonArray));
+       }
+       else{
+         itemsJsonArrayStr=localStorage.getItem('itemsJson');
+        //  abb string ko parse bhi karna hoga as jo bhi element aayega vo as a string hi aayega
+        itemsJsonArray=JSON.parse(itemsJsonArrayStr);
+       }
+
+      //  populate the table
+     let  tablebody=document.getElementById("tablebody");
+      let str="";
+      itemsJsonArray.forEach((element,index=1) => {
+        str+=`
+        <tr>
+          
+           <th scope="row">${index+1}</th>
+          <td>${element[0]}</td>
+           <td>${element[1]}</td>
+          <td><button class="btn btn-sm btn-primary" onclick="deleted(${index})">Delete</button></td>
+            </tr>
+        `
+        // index ka serial no daalne ke liye ye syntax use hota hai ${index}
+        // string ke ander maine saari cheezo ko '`' backtiks mai daala hai
+      });
+      tablebody.innerHTML=str;
+      }
+     add=document.getElementById("add");
+     add.addEventListener("click",getAndupdate);
+    //  update naam ka function hi issliye banaya hai kyuki ja call hoga toh ussi ke sath hi value de dega
+    // ye last mai update issliye call kara hai kyuki khulte hi list aa jagaengi
+    update();
+    function deleted(itemindex){
+      console.log("Deleted",itemindex)
+      itemsJsonArray=localStorage.getItem('itemJson')
+      itemsJsonArray=JSON.parse(itemsJsonArrayStr);
+      // deleted itemIndex element from array
+    itemsJsonArray.splice(itemindex,1);
+     localStorage.setItem('itemsJson',JSON.stringify(itemsJsonArray));
+      update();
+    }
+    function clearStr(){
+      if(confirm("Do you really want to clear")){
+      console.log("Clearing List");
+      localStorage.clear();
+      update();
+      }
+    }
+    </script>
+  </body>
+</html>
